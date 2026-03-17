@@ -1,0 +1,128 @@
+{
+  "experiment": "Failure-Aware Prompting for Document-Grounded Verification",
+  "model": "Claude Opus 4.6",
+  "test_set_size": 80,
+  "failure_bank_sizes": {
+    "v2": 13,
+    "scaled": 25
+  },
+  "phase1_probe": {
+    "total": 80,
+    "errors": 13,
+    "error_rate": 0.162,
+    "per_type_error_rate": {
+      "3-Factual Mismatch": 0.0,
+      "4-Negation Flip": 0.14,
+      "5-Condition/Intensity": 0.42,
+      "6-Certainty/Status": 0.38,
+      "7-Ungrounded Reasoning": 0.07
+    }
+  },
+  "phase3_5arm": {
+    "A_baseline": {
+      "accuracy": 0.8125,
+      "ns_precision": 1.0,
+      "ns_recall": 0.75,
+      "ns_f1": 0.8571428571428571,
+      "tp": 45,
+      "fp": 0,
+      "fn": 15,
+      "tn": 20
+    },
+    "B_static": {
+      "accuracy": 0.825,
+      "ns_f1": 0.87
+    },
+    "D_length_control": {
+      "accuracy": 0.825,
+      "ns_f1": 0.868
+    },
+    "Bp_random_failure": {
+      "accuracy": 0.912,
+      "ns_f1": 0.939
+    },
+    "C_dynamic_retrieved": {
+      "accuracy": 0.9,
+      "ns_precision": 0.9642857142857143,
+      "ns_recall": 0.9,
+      "ns_f1": 0.9310344827586207,
+      "tp": 54,
+      "fp": 2,
+      "fn": 6,
+      "tn": 18
+    }
+  },
+  "statistical_tests": {
+    "A_vs_B": {
+      "delta": 0.012,
+      "p_value": 0.501,
+      "significant": false
+    },
+    "A_vs_D": {
+      "delta": 0.012,
+      "p_value": 0.512,
+      "significant": false
+    },
+    "A_vs_Bp": {
+      "delta": 0.1,
+      "p_value": 0.01,
+      "significant": true
+    },
+    "A_vs_C": {
+      "observed_diff": 0.08750000000000002,
+      "p_value": 0.0322,
+      "ci_95": [
+        0.0125,
+        0.175
+      ],
+      "significant": true
+    },
+    "Bp_vs_C": {
+      "delta": -0.012,
+      "p_value": 0.749,
+      "significant": false
+    }
+  },
+  "effect_decomposition": {
+    "length_attention": {
+      "delta": 0.012,
+      "significant": false
+    },
+    "failure_content": {
+      "delta": 0.088,
+      "significant": true
+    },
+    "retrieval": {
+      "delta": -0.012,
+      "significant": false
+    }
+  },
+  "per_type_recall": {
+    "A": {
+      "3-Factual Mismatch": 1.0,
+      "4-Negation Flip": 0.625,
+      "5-Condition/Intensity Alteration": 0.6153846153846154,
+      "6-Certainty/Status Escalation": 0.46153846153846156,
+      "7-Ungrounded Reasoning": 1.0
+    },
+    "C": {
+      "3-Factual Mismatch": 1.0,
+      "4-Negation Flip": 1.0,
+      "5-Condition/Intensity Alteration": 0.7692307692307693,
+      "6-Certainty/Status Escalation": 0.7692307692307693,
+      "7-Ungrounded Reasoning": 1.0
+    }
+  },
+  "retrieval_quality": {
+    "type_match_at_1": 0.11666666666666667,
+    "precision_at_3": 0.48333333333333334,
+    "total_ns": 60
+  },
+  "scaled_experiment": {
+    "bank_size": 25,
+    "Bp_accuracy": 0.912,
+    "C_accuracy": 0.925,
+    "Bp_vs_C_p_value": 0.5,
+    "conclusion": "Retrieval still adds no significant value with larger bank"
+  }
+}
